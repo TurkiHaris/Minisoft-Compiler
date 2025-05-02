@@ -158,4 +158,6 @@ python compiler.py tests/test_invalid.ms
 
 ## 📄 License
 
-This project is provided for educational purposes. See LICENSE for details.
+This project is provided solely for educational purposes.  
+You may use, copy, and modify the code for non-commercial, educational use only.  
+No warranty is provided. Use at your own risk.
