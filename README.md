@@ -2,6 +2,8 @@
 
 A teaching compiler for the MiniSoft language, implemented in Python 3.11+. It performs lexical/syntax analysis with Lark and semantic analysis with a custom Transformer. Offers both a command‑line interface and an interactive Streamlit web UI.
 
+> 📚 📚 This application was developed as part of a university project for the course Compiler Design 1, showcasing the practical application of compiler construction techniques using Python.
+
 ## 🚀 Features
 
 - Full LALR grammar for MiniSoft language implementation
@@ -159,5 +161,4 @@ python compiler.py tests/test_invalid.ms
 ## 📄 License
 
 This project is provided solely for educational purposes.  
-You may use, copy, and modify the code for non-commercial, educational use only.  
-No warranty is provided. Use at your own risk.
+You may use, copy, and modify the code for non-commercial, educational use only.
