@@ -1,0 +1,13 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+monkeytype_config.py
+*.egg
+monkeytype.sqlite3
+.ruff_cache
+# Virtual environments
+.venv

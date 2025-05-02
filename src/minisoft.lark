@@ -1,0 +1,116 @@
+?start: program
+
+program: "MainPrgm" IDENTIFIER ";" declarations "BeginPg" "{" instructions "}" "EndPg" ";"
+
+declarations: "Var" declaration*
+
+?declaration: variable_declaration | constant_declaration
+
+variable_declaration: "let" identifier_list ":" type_specifier ";"
+identifier_list: IDENTIFIER ("," IDENTIFIER)*
+
+?type_specifier: basic_type | array_specifier
+// Use the new Terminal names here
+basic_type: INT | FLOAT
+array_specifier: "[" basic_type ";" positive_integer "]"
+
+// Use basic_type here as well
+constant_declaration: "@define" "Const" IDENTIFIER ":" basic_type "=" constant_value ";"
+
+?constant_value: signed_integer | signed_float
+signed_integer: INTEGER | "(" [SIGN] INTEGER ")"
+// Use the new float literal terminal name here
+signed_float: FLOAT_VAL | "(" [SIGN] FLOAT_VAL ")"
+positive_integer: INTEGER // Needs semantic check for > 0
+
+?instructions: instruction*
+
+?instruction: assignment ";"
+            | conditional
+            | do_while_loop ";"
+            | for_loop
+            | input_statement ";"
+            | output_statement ";"
+            | empty_instruction ";"
+
+empty_instruction:
+
+assignment: variable_access ":=" expression
+
+?variable_access: IDENTIFIER | array_access
+array_access: IDENTIFIER "[" expression "]"
+
+conditional: "if" "(" condition ")" "then" "{" instructions "}" ["else" "{" instructions "}"]
+
+do_while_loop: "do" "{" instructions "}" "while" "(" condition ")"
+
+for_loop: "for" IDENTIFIER "from" expression "to" expression "step" expression "{" instructions "}"
+
+input_statement: "input" "(" IDENTIFIER ")"
+output_statement: "output" "(" output_list ")"
+output_list: output_item ("," output_item)*
+?output_item: expression | STRING
+
+// --- Expressions with Precedence ---
+?condition: expression // Conditions are expressions evaluated in boolean context
+
+?expression: logical_or
+?logical_or: logical_and (OR logical_and)*
+?logical_and: comparison (AND comparison)*
+?comparison: arith_expr ( (GT | LT | GTE | LTE | EQ | NEQ) arith_expr )?
+?arith_expr: term ((PLUS | MINUS) term)*
+?term: factor ((STAR | SLASH) factor)*
+?factor: [SIGN] atom | NOT factor // Unary plus/minus, logical not
+?atom: signed_integer
+     | signed_float // This uses signed_float, which now uses FLOAT_VAL
+     | variable_access
+     | "(" expression ")"
+
+// --- Terminals ---
+IDENTIFIER: /[a-zA-Z][a-zA-Z0-9_]*/
+INTEGER: /[0-9]+/
+// RENAME the float literal terminal
+FLOAT_VAL: /[0-9]+\.[0-9]+/
+STRING: /"[^"]*"/
+SIGN: PLUS | MINUS // Use defined +/
+
+// Keywords (case-sensitive)
+INT: "Int"
+FLOAT: "Float"
+
+AND: "AND"
+OR: "OR"
+NOT: "!" // Using ! as NOT
+
+// Operators (will be passed as tokens)
+PLUS: "+"
+MINUS: "-"
+STAR: "*"
+SLASH: "/"
+GT: ">"
+LT: "<"
+GTE: ">="
+LTE: "<="
+EQ: "=="
+NEQ: "!="
+
+// Assignment
+ASSIGN: ":="
+
+// Parentheses, Braces, Brackets, Punctuation
+LPAR: "("
+RPAR: ")"
+LBRACE: "{"
+RBRACE: "}"
+LBRACK: "["
+RBRACK: "]"
+SEMICOLON: ";"
+COMMA: ","
+COLON: ":"
+
+// --- Comments & Whitespace ---
+COMMENT_SL: /<!.*?-?!>/
+COMMENT_ML: /\{\s*--.*?\s*--\s*\}/s
+%ignore COMMENT_SL
+%ignore COMMENT_ML
+%ignore /\s+/ // Ignore whitespace
