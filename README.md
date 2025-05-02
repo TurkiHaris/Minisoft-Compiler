@@ -2,7 +2,7 @@
 
 A teaching compiler for the MiniSoft language, implemented in Python 3.11+. It performs lexical/syntax analysis with Lark and semantic analysis with a custom Transformer. Offers both a command‑line interface and an interactive Streamlit web UI.
 
-> 📚 📚 This application was developed as part of a university project for the course Compiler Design 1, showcasing the practical application of compiler construction techniques using Python.
+> 📚 📚 This application was developed as part of a university project for the course **Compiler Design 1**, showcasing the practical application of compiler construction techniques using Python.
 
 ## 🚀 Features
 
