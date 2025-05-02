@@ -43,6 +43,8 @@ BeginPg
     names[500] := 10; <!- Error: (index out of bounds) -!>
     names[1] := names[0] + (names[500]+5); <!- Error: (index out of bounds) -!>
     names[6] := 1;     <!- Error: (index out of bounds) -!>
+    names[(-6)] :=2;   <!- Error: (index out of bounds) -!>
+    names[(-500)] := 10; <!- Error: (index out of bounds) -!> 
 
     names[5.5] := 1; <!- Array index must be Int, got 'Float' -!>
     names[total] := 1; <!- Array index must be Int, got 'Float' -!>
