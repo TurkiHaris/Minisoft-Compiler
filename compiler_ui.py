@@ -7,8 +7,6 @@ from src.semantic_analyzer import (
 )  # Assuming SymbolTable is needed for type hinting/instance checks
 import pandas as pd
 import traceback
-import monkeytype
-monkeytype.trace()
 
 # --- Grammar Loading ---
 try:
